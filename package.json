@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "dev": "nodemon src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "AhmedSat",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
