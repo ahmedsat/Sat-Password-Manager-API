@@ -9,19 +9,17 @@ const authenticate = async (req, res, next) => {
   }
   const tokenWithoutBearer = token.split("Bearer ")[1];
   try {
-    const decoded = await jwt.verify(
-      tokenWithoutBearer,
-      process.env.JWT_SECRET
-    );
+    const decoded = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id).select("-password");
     if (!user) {
       throw new UnauthenticatedError("user not found");
     }
+
     req.user = user.toObject();
     req.user.tokenLifetime = decoded.exp - Date.now() / 1000;
     next();
   } catch (err) {
-    logger.error(err);
+    
     throw new UnauthenticatedError("token is not valid");
   }
 };
