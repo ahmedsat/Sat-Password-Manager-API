@@ -8,9 +8,8 @@ const {
   updatePassword,
   deletePassword,
 } = require("../controllers/passwords");
-const { auth } = require("../middlewares");
 
-router.route("/").post(auth, addPassword).get(getAllPasswords);
+router.route("/").post(addPassword).get(getAllPasswords);
 router
   .route("/:id")
   .get(getPassword)
