@@ -1,7 +1,11 @@
 const Password = require("../models/Password");
+const { StatusCodes } = require("http-status-codes");
 
 const addPassword = async (req, res) => {
-  res.json({ ...req.user, ...req.body });
+  req.body.userId = req.user._id;
+  const password = await Password.create({ ...req.body });
+  res.status(StatusCodes.CREATED).json(password);
+  // res.json({ ...req.body });
 };
 
 const getPassword = (req, res) => {

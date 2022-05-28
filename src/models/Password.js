@@ -35,3 +35,5 @@ PasswordSchema.pre("save", async function () {
     process.env.AES_KEY
   ).toString();
 });
+
+module.exports = mongoose.model("Password", PasswordSchema);
