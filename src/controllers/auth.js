@@ -1,6 +1,10 @@
-const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
-const res = require("express/lib/response");
+const {
+  NotFoundError,
+  BadRequestError,
+  UnauthenticatedError,
+} = require("../errors");
+const User = require("../models/User");
 
 const register = async (req, res) => {
   const user = await User.create({ ...req.body });
@@ -11,8 +15,27 @@ const register = async (req, res) => {
     .json({ name: user.name, id: user._id, token: token });
 };
 
-const login = (req, res) => {
-  res.json({ message: "Login", data: req.body });
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    throw new BadRequestError("Email and password are required");
+  }
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new NotFoundError("User not found");
+  }
+
+  const isMatch = await user.comparePassword(password);
+  if (!isMatch) {
+    throw new UnauthenticatedError("Invalid password");
+  }
+
+  token = user.CreatJWT();
+  res
+    .header("x-auth-token", token)
+    .status(StatusCodes.OK)
+    .json({ name: user.name, id: user._id, token: token });
 };
 
 const deleteUser = async (req, res) => {
