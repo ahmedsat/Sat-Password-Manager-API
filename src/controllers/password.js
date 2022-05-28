@@ -1,5 +1,7 @@
-const addPassword = (req, res) => {
-  res.json({ ...req.user });
+const Password = require("../models/Password");
+
+const addPassword = async (req, res) => {
+  res.json({ ...req.user, ...req.body });
 };
 
 const getPassword = (req, res) => {

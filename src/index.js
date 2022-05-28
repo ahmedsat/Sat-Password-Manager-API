@@ -6,7 +6,7 @@ const express = require("express");
 const ConnectedDB = require("./DB/connectDB");
 
 const authRouter = require("./routes/auth");
-const passwordsRouter = require("./routes/passwords");
+const passwordsRouter = require("./routes/password");
 
 const { errorHandler, notFoundHandler, auth } = require("./middlewares");
 
