@@ -6,6 +6,7 @@ const express = require("express");
 const ConnectedDB = require("./DB/connectDB");
 
 const authRouter = require("./routes/auth");
+const passwordsRouter = require("./routes/passwords");
 
 const { errorHandler, notFoundHandler } = require("./middlewares");
 
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/passwords", passwordsRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

@@ -1,5 +1,5 @@
 const addPassword = (req, res) => {
-  res.send("Add Password");
+  res.json({ ...req.user });
 };
 
 const getPassword = (req, res) => {
