@@ -27,6 +27,19 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
+  loginExpires: {
+    type: String,
+    default: "1h",
+    match: [/^[0-9]+[dhms]$/, "Login expires must be a valid duration"],
+  },
 });
 
 UserSchema.pre("save", async function (next) {
