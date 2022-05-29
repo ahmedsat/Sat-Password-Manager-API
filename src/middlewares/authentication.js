@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const { UnauthenticatedError } = require("../errors");
 
 const authenticate = async (req, res, next) => {
-  const token = req.header("x-auth-token");
+  const token = req.header("authorization");
   if (!token || !token.startsWith("Bearer ")) {
     throw new UnauthenticatedError("token is not valid");
   }
@@ -19,7 +19,6 @@ const authenticate = async (req, res, next) => {
     req.user.tokenLifetime = decoded.exp - Date.now() / 1000;
     next();
   } catch (err) {
-    
     throw new UnauthenticatedError("token is not valid");
   }
 };

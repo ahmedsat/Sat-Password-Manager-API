@@ -10,7 +10,7 @@ const register = async (req, res) => {
   const user = await User.create({ ...req.body });
   token = user.CreatJWT();
   res
-    .header("x-auth-token", token)
+
     .status(StatusCodes.CREATED)
     .json({ name: user.name, id: user._id, token: token });
 };
@@ -33,7 +33,7 @@ const login = async (req, res) => {
 
   token = user.CreatJWT();
   res
-    .header("x-auth-token", token)
+
     .status(StatusCodes.OK)
     .json({ name: user.name, id: user._id, token: token });
 };

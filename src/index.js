@@ -16,7 +16,7 @@ const port = process.env.PORT || 5000;
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.json({ ...req.headers });
 });
 
 app.use("/api/v1/auth", authRouter);
