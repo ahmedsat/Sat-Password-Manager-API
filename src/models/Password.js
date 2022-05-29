@@ -36,4 +36,22 @@ PasswordSchema.pre("save", async function () {
   ).toString();
 });
 
+PasswordSchema.post("findOne", async function (doc) {
+  if (doc) {
+    doc.password = CryptoJS.AES.decrypt(
+      doc.password,
+      process.env.AES_KEY
+    ).toString(CryptoJS.enc.Utf8);
+  }
+});
+
+PasswordSchema.post("find", async function (docs) {
+  docs.forEach((doc) => {
+    doc.password = CryptoJS.AES.decrypt(
+      doc.password,
+      process.env.AES_KEY
+    ).toString(CryptoJS.enc.Utf8);
+  });
+});
+
 module.exports = mongoose.model("Password", PasswordSchema);
