@@ -14,6 +14,11 @@ const PasswordSchema = new mongoose.Schema(
       minlength: 3,
       maxlength: 255,
     },
+    url: {
+      type: String,
+      default: "",
+      maxlength: 255,
+    },
     username: {
       type: String,
       required: [true, "Username is required"],

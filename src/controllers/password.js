@@ -1,10 +1,23 @@
 const Password = require("../models/Password");
 const { StatusCodes } = require("http-status-codes");
-const { NotFoundError } = require("../errors");
+const { NotFoundError, BadRequestError } = require("../errors");
 
 const addPassword = async (req, res) => {
-  req.body.userId = req.user._id;
-  const password = await Password.create({ ...req.body });
+  const {
+    user: { _id: userId },
+    body: { name, url, username, password: userPassword },
+  } = req;
+
+  if (!name || !username || !userPassword) {
+    throw new BadRequestError("Missing required fields");
+  }
+  const password = await Password.create({
+    userId,
+    name,
+    url,
+    username,
+    password: userPassword,
+  });
   res.status(StatusCodes.CREATED).json(password);
 };
 
@@ -24,11 +37,17 @@ const getAllPasswords = async (req, res) => {
   res.status(StatusCodes.OK).json({ size: passwords.length, passwords });
 };
 
-const updatePassword = (req, res) => {
+const updatePassword = async (req, res) => {
+  const {
+    user: { _id: userId },
+    params: { id: passwordId },
+    body: { name, url, username, password },
+  } = req;
+
   res.send("Update Password");
 };
 
-const deletePassword = (req, res) => {
+const deletePassword = async (req, res) => {
   res.send("Delete Password");
 };
 
