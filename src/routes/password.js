@@ -7,7 +7,7 @@ const {
   getAllPasswords,
   updatePassword,
   deletePassword,
-} = require("../controllers/passwords");
+} = require("../controllers/password");
 
 router.route("/").post(addPassword).get(getAllPasswords);
 router
