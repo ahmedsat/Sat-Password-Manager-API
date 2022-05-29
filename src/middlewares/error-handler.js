@@ -15,10 +15,12 @@ const ErrorHandler = (err, req, res, next) => {
     };
   }
 
-  // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-  //   message: err,
-  //   error: err,
-  // });
+  if (err.code && err.code === 11000) {
+    customError.msg = `Duplicate value entered for ${Object.keys(
+      err.keyValue
+    )} field, please choose another value`;
+    customError.statusCode = 400;
+  }
 
   return res.status(CustomError.statusCode).json({
     message: CustomError.message,
