@@ -41,7 +41,7 @@ const getAllPasswords = async (req, res) => {
   const {
     user: { _id: userId },
   } = req;
-  const passwords = await Password.find({ userId });
+  const passwords = await Password.find({ userId }).sort({ createdAt: -1 });
   passwords.forEach((password) => {
     password.password = crypto.decryptPassword(password.password);
   });

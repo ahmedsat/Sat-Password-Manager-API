@@ -14,7 +14,6 @@ const authRouter = require("./routes/auth");
 const passwordsRouter = require("./routes/password");
 
 const { errorHandler, notFoundHandler, auth } = require("./middlewares");
-const { default: rateLimit } = require("express-rate-limit");
 
 const app = express();
 const port = process.env.PORT || 5000;
