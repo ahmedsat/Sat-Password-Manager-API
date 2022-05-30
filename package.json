@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-		"up":"heroku ps:scale web=1",
-		"down":"heroku ps:scale web=0"
+    "pub": "git push heroku master",
+    "up": "heroku ps:scale web=1",
+    "down": "heroku ps:scale web=0"
   },
   "keywords": [],
   "author": "AhmedSat",
@@ -26,7 +27,7 @@
     "mongoose": "^6.3.4",
     "xss-clean": "^0.1.1"
   },
-"engines": {
+  "engines": {
     "node": "17.x"
   }
 }
