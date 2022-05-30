@@ -32,7 +32,7 @@ app.use(cors());
 app.use(xss());
 
 app.get("/", (req, res) => {
-  res.json({ ...req.headers });
+  res.send("WOW, it's working");
 });
 
 app.use("/api/v1/auth", authRouter);

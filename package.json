@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+		"up":"heroku ps:scale web=1",
+		"down":"heroku ps:scale web=0"
   },
   "keywords": [],
   "author": "AhmedSat",
@@ -23,5 +25,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.4",
     "xss-clean": "^0.1.1"
+  },
+"engines": {
+    "node": "17.x"
   }
 }
