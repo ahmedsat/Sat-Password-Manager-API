@@ -38,6 +38,12 @@ const login = async (req, res) => {
     .json({ name: user.name, id: user._id, token: token });
 };
 
+const me = async (req, res) => {
+  // destructuring the user from the request
+  const { user } = req;
+  res.status(StatusCodes.OK).json({ name: user.name, id: user._id });
+};
+
 const deleteUser = async (req, res) => {
   const { id } = req.params;
   const user = await User.findByIdAndDelete(id);
