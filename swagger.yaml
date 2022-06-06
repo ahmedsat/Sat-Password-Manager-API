@@ -1,0 +1,812 @@
+openapi: 3.0.0
+info:
+  title: sat-password-manager-api
+  version: 1.0.0
+  description: A sample API that uses a petstore as an example to demonstrate features in the OpenAPI
+  termsOfService: http://swagger.io/terms/
+  contact: {}
+servers:
+  - url: https://sat-password-manager-api.herokuapp.com/api/v1
+    # - url: http://localhost:3000/
+    variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      description: Register a new user
+      operationId: registerUser
+      parameters: []
+      requestBody:
+        description: Create a new user
+        content:
+          application/json:
+            schema:
+              required:
+                - email
+                - password
+                - name
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+            example:
+              name: my-name
+              email: example@site.domain
+              password: my-password
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      token:
+                        type: string
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      password:
+                        type: string
+        "409":
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      password:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      password:
+                        type: string
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login a user
+      description: Login a user
+      operationId: loginUser
+      parameters: []
+      requestBody:
+        description: Login a user
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+            example:
+              email: example@site.domain
+              password: my-password
+      responses:
+        "200":
+          description: User logged in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      token:
+                        type: string
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      password:
+                        type: string
+        "401":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      password:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      password:
+                        type: string
+  /auth/me:
+    get:
+      tags:
+        - Auth
+      summary: Get logged in user
+      description: Get logged in user
+      operationId: getMe
+      parameters: []
+      responses:
+        "200":
+          description: User found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      token:
+                        type: string
+        "401":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      password:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      password:
+                        type: string
+  /passwords:
+    get:
+      tags:
+        - Passwords
+      summary: Get all passwords
+      description: Get all passwords
+      operationId: getPasswords
+      parameters: []
+      responses:
+        "200":
+          description: Passwords found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        url:
+                          type: string
+                        username:
+                          type: string
+                        password:
+                          type: string
+                        notes:
+                          type: string
+        "401":
+          description: Passwords not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      password:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                      password:
+                        type: string
+    post:
+      tags:
+        - Passwords
+      summary: Create a new password
+      description: Create a new password
+      operationId: createPassword
+      parameters: []
+      requestBody:
+        description: Create a new password
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - url
+                - username
+                - password
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+            example:
+              name: my-name
+              url: example.site.domain
+              username: my-username
+              password: my-password
+      responses:
+        "201":
+          description: Password created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+                      notes:
+                        type: string
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+        "409":
+          description: Password already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+  /passwords/{id}:
+    get:
+      tags:
+        - Passwords
+      summary: Get a password
+      description: Get a password
+      operationId: getPassword
+      parameters:
+        - name: id
+          in: path
+          description: Password id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Password found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+                      notes:
+                        type: string
+        "401":
+          description: Password not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "409":
+          description: Password already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+                      notes:
+                        type: string
+    patch:
+      tags:
+        - Passwords
+      summary: Update a password
+      description: Update a password
+      operationId: updatePassword
+      parameters:
+        - name: id
+          in: path
+          description: Password id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update a password
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - url
+                - username
+                - password
+              type: object
+              properties:
+                name:
+                  type: string
+                url:
+                  type: string
+                username:
+                  type: string
+                password:
+                  type: string
+            example:
+              name: my-name
+              url: example.site.domain
+              username: my-username
+              password: my-password
+      responses:
+        "200":
+          description: Password updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+                      notes:
+                        type: string
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+        "409":
+          description: Password already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      url:
+                        type: string
+                      username:
+                        type: string
+                      password:
+                        type: string
+        "401":
+          description: Password not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "404":
+          description: Password not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+    delete:
+      tags:
+        - Passwords
+      summary: Delete a password
+      description: Delete a password
+      operationId: deletePassword
+      parameters:
+        - name: id
+          in: path
+          description: Password id
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Password deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "409":
+          description: Password already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "401":
+          description: Password not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+        "404":
+          description: Password not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+components:
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+  - httpBearer: []
+tags:
+  - name: Auth
+    description: ""
+  - name: Passwords
+    description: ""
